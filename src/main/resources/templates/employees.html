@@ -1,37 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Employee management app</title>
     <script src="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>
-
-
-
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
 </head>
+
 <body>
-    <h1>All employees in company</h1>
-    <table id="employeeTable" class="display">
+    <h1>Employees</h1>
+    <table id="employeeTable" class="cell-border">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
+                <th>Salary</th>
+                <th>Work start date</th>
+                <th>Work finish date</th>
+                <th>Phone</th>
+                <th>Street</th>
+                <th>City</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="employee : ${employees}">
-                <td th:text="${employee.id}"></td>
                 <td th:text="${employee.firstName}"></td>
                 <td th:text="${employee.lastName}"></td>
+                <td th:text="${employee.salary}"></td>
+                <td th:text="${employee.workStartDate}"></td>
+                <td th:text="${employee.workEndDate}"></td>
+                <td th:text="${employee.contactDetails.phone}"></td>
+                <td th:text="${employee.contactDetails.street}"></td>
+                <td th:text="${employee.contactDetails.city}"></td>
+                <td><a th:href="@{/edit_employee(id=${employee.id})}" class="btn btn-danger">Edit</a></td>
+                <td><a th:href="@{/delete_employee(id=${employee.id})}" class="btn btn-danger">Delete</a></td>
+
             </tr>
         </tbody>
     </table>
 
     <script>
         $(document).ready(function() {
-            $('#employeeTable').DataTable();
+            $('#employeeTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'print'
+                ]
+            });
         } );
     </script>
 </body>
