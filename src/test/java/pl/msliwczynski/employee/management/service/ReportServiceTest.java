@@ -81,7 +81,7 @@ public class ReportServiceTest {
         when(reportServiceHelper.getSalariesForMonth(anyString(), eq(Month.APRIL), anyIterable())).thenReturn(Arrays.asList(8000.0, 4000.0));
         when(reportServiceHelper.getSalariesForMonth(anyString(), eq(Month.MAY), anyIterable())).thenReturn(Arrays.asList(8000.0, 4000.0));
 
-        Map<String, List<Double>> actual= reportService.getReportByYear("2018");
+        Map<Integer, List<Double>> actual= reportService.getReportByYear("2018");
         assertEquals(4, actual.keySet().size());
     }
 
@@ -90,7 +90,7 @@ public class ReportServiceTest {
         when(employeeRepository.findAll()).thenReturn(getMockEmployees());
         when(reportServiceHelper.getSalariesForMonth(anyString(), any(Month.class), anyIterable())).thenReturn(Arrays.asList(0.0, 0.0));
 
-        Map<String, List<Double>> actual= reportService.getReportByYear("2017");
+        Map<Integer, List<Double>> actual= reportService.getReportByYear("2017");
         assertEquals(12, actual.keySet().size());
     }
 

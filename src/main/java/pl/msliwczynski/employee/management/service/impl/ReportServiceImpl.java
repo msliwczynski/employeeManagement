@@ -8,11 +8,9 @@ import pl.msliwczynski.employee.management.service.helpers.ReportServiceHelper;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.format.TextStyle;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -26,8 +24,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Map<String, List<Double>> getReportByYear(String year) {
-        Map<String, List<Double>> reportMap = new HashMap<>();
+    public Map<Integer, List<Double>> getReportByYear(String year) {
+        Map<Integer, List<Double>> reportMap = new TreeMap<>();
         Iterable<Employee> employeeIterable = employeeRepository.findAll();
         LocalDate monthStartDate = LocalDate.of(Integer.valueOf(year), 1, 1);
         LocalDate today = LocalDate.now();
@@ -35,7 +33,8 @@ public class ReportServiceImpl implements ReportService {
 
         do {
             List<Double> salaries = reportServiceHelper.getSalariesForMonth(year, monthStartDate.getMonth(), employeeIterable);
-            reportMap.put(monthStartDate.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH), salaries);
+//            reportMap.put(monthStartDate.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH), salaries);
+            reportMap.put(monthStartDate.getMonth().getValue(), salaries);
             monthStartDate = monthStartDate.plusMonths(1);
         } while (monthStartDate.getMonth() != stopMonth);
 
