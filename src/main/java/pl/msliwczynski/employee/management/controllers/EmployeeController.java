@@ -12,12 +12,11 @@ import pl.msliwczynski.employee.management.model.Employee;
 import pl.msliwczynski.employee.management.repositories.ContactDetailsRepository;
 import pl.msliwczynski.employee.management.repositories.EmployeeRepository;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
 public class EmployeeController {
-    private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
     private EmployeeRepository employeeRepository;
     private ContactDetailsRepository contactDetailsRepository;
@@ -36,7 +35,7 @@ public class EmployeeController {
 
     @GetMapping("/addemployee")
     public String getEmployeeForm(Model model) {
-        logger.info("Getting adding employee form");
+        LOGGER.info("Getting adding employee form");
         model.addAttribute("employee", new Employee());
 
         return "addemployee";
@@ -44,29 +43,29 @@ public class EmployeeController {
 
     @PostMapping("/addemployee")
     public String addEmployee(@ModelAttribute Employee employee) {
-        logger.info("Saving employee {}", employee);
+        LOGGER.info("Saving employee {}", employee);
         contactDetailsRepository.save(employee.getContactDetails());
         employeeRepository.save(employee);
-        logger.debug("saving completed");
+        LOGGER.debug("saving completed");
 
         return "result";
     }
 
     @GetMapping("/delete_employee")
     public String deleteEmployee(@RequestParam(name="id")String employeeId) {
-        logger.info("Deleting employee id= {}", employeeId);
+        LOGGER.info("Deleting employee id= {}", employeeId);
         employeeRepository.deleteById(Long.valueOf(employeeId));
-        logger.debug("deleting completed");
+        LOGGER.debug("deleting completed");
 
         return "result";
     }
 
     @GetMapping("/edit_employee")
     public String editEmployee(@RequestParam(name="id")String employeeId, Model model) {
-        logger.info("Getting adding employee form");
+        LOGGER.info("Getting adding employee form");
         Optional<Employee> employee = employeeRepository.findById(Long.valueOf(employeeId));
         model.addAttribute("employee", employee);
-        logger.info("sending entity {}", employee);
+        LOGGER.info("sending entity {}", employee);
 
         return "addemployee";
     }
