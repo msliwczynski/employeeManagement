@@ -12,22 +12,6 @@ import java.util.List;
 
 @Component
 public class ReportServiceHelper {
-    public boolean isWorkStartDateBeforeEndOfTheYear(LocalDate workStartDate, String year) {
-        if (workStartDate == null || year == null) {
-            return false;
-        }
-        LocalDate yearDate = LocalDate.of(Integer.valueOf(year), Month.DECEMBER, 31);
-        return workStartDate.isBefore(yearDate);
-    }
-
-    public boolean isWorkEndDateNullEqualsOrAfterEndOfYear(LocalDate workEndDate, String year) {
-        if (workEndDate == null) {
-            return true;
-        }
-        LocalDate yearDate = LocalDate.of(Integer.valueOf(year), Month.DECEMBER, 31);
-
-        return !workEndDate.isBefore(yearDate);
-    }
 
     public List<Double> getSalariesForMonth(String year, Month month, Iterable<Employee> employeeList) {
         LocalDate endDate = LocalDate.of(Integer.valueOf(year), month, month.length(Year.of(Integer.valueOf(year)).isLeap()));
