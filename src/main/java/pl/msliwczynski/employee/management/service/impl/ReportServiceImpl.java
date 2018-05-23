@@ -9,7 +9,10 @@ import pl.msliwczynski.employee.management.service.helpers.ReportServiceHelper;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -26,14 +29,16 @@ public class ReportServiceImpl implements ReportService {
     public Map<String, List<Double>> getReportByYear(String year) {
         Map<String, List<Double>> reportMap = new HashMap<>();
         Iterable<Employee> employeeIterable = employeeRepository.findAll();
-//        List<Employee> employeesFromYear = getAllEmployeesWorkedInGivenYear(employeeIterable, year);
         LocalDate monthStartDate = LocalDate.of(Integer.valueOf(year), 1, 1);
+        LocalDate today = LocalDate.now();
+        Month stopMonth = Integer.valueOf(year).equals(today.getYear()) ? LocalDate.now().getMonth() : Month.JANUARY;
 
-        while (monthStartDate.getMonth() != LocalDate.now().getMonth()) {
+        do {
             List<Double> salaries = reportServiceHelper.getSalariesForMonth(year, monthStartDate.getMonth(), employeeIterable);
             reportMap.put(monthStartDate.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH), salaries);
-            monthStartDate.plusMonths(1);
-        }
+            monthStartDate = monthStartDate.plusMonths(1);
+        } while (monthStartDate.getMonth() != stopMonth);
+
 
         return reportMap;
     }
