@@ -28,10 +28,10 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
     private void initData() {
         ContactDetails johnContactDetails = new ContactDetails("7123456789","5th Avenue, 123", "New York");
-        Employee john = new Employee("John", "Smith", LocalDate.of(2018, 1, 1), LocalDate.of(9999,12,31), 3000.00, johnContactDetails);
+        Employee john = new Employee("John", "Smith", LocalDate.of(2018, 1, 1), null, 3000.00, johnContactDetails);
 
         ContactDetails adamContactDetails = new ContactDetails("123456789","Bracka 2", "Warszawa");
-        Employee adam = new Employee("Adam", "Kowalski", LocalDate.of(2018, 4, 1), LocalDate.of(9999,12,31), 5000.00, adamContactDetails);
+        Employee adam = new Employee("Adam", "Kowalski", LocalDate.of(2018, 4, 1), null, 5000.00, adamContactDetails);
 
         contactDetailsRepository.save(johnContactDetails);
         employeeRepository.save(john);
