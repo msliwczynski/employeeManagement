@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.msliwczynski.employee.management.model.Employee;
 import pl.msliwczynski.employee.management.repositories.ContactDetailsRepository;
 import pl.msliwczynski.employee.management.repositories.EmployeeRepository;
+import pl.msliwczynski.employee.management.service.EmployeeService;
 
 import java.util.Optional;
 
@@ -18,24 +19,22 @@ import java.util.Optional;
 public class EmployeeController {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
-    private EmployeeRepository employeeRepository;
-    private ContactDetailsRepository contactDetailsRepository;
+    EmployeeService employeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository, ContactDetailsRepository contactDetailsRepository) {
-        this.employeeRepository = employeeRepository;
-        this.contactDetailsRepository = contactDetailsRepository;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @GetMapping("/admin/employees")
     public String getEmployeesForAdmin(Model model) {
-        model.addAttribute("employees", employeeRepository.findAll());
+        model.addAttribute("employees", employeeService.getAllEmployees());
 
         return "admin_employees";
     }
 
     @GetMapping("/user/employees")
     public String getEmployees(Model model) {
-        model.addAttribute("employees", employeeRepository.findAll());
+        model.addAttribute("employees", employeeService.getAllEmployees());
 
         return "employees";
     }
@@ -51,8 +50,7 @@ public class EmployeeController {
     @PostMapping("/user/addemployee")
     public String addEmployee(@ModelAttribute Employee employee) {
         LOGGER.info("Saving employee {}", employee);
-        contactDetailsRepository.save(employee.getContactDetails());
-        employeeRepository.save(employee);
+        employeeService.saveEmployee(employee);
         LOGGER.debug("saving completed");
 
         return "result";
@@ -61,7 +59,7 @@ public class EmployeeController {
     @GetMapping("/user/delete_employee")
     public String deleteEmployee(@RequestParam(name="id")String employeeId) {
         LOGGER.info("Deleting employee id= {}", employeeId);
-        employeeRepository.deleteById(Long.valueOf(employeeId));
+        employeeService.removeEmployee(employeeId);
         LOGGER.debug("deleting completed");
 
         return "result";
@@ -70,7 +68,7 @@ public class EmployeeController {
     @GetMapping("/user/edit_employee")
     public String editEmployee(@RequestParam(name="id")String employeeId, Model model) {
         LOGGER.info("Getting adding employee form");
-        Optional<Employee> employee = employeeRepository.findById(Long.valueOf(employeeId));
+        Optional<Employee> employee = employeeService.getEmployeeById(employeeId);
         model.addAttribute("employee", employee);
         LOGGER.info("sending entity {}", employee);
 
