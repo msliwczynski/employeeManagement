@@ -26,14 +26,21 @@ public class EmployeeController {
         this.contactDetailsRepository = contactDetailsRepository;
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/admin/employees")
+    public String getEmployeesForAdmin(Model model) {
+        model.addAttribute("employees", employeeRepository.findAll());
+
+        return "admin_employees";
+    }
+
+    @GetMapping("/user/employees")
     public String getEmployees(Model model) {
         model.addAttribute("employees", employeeRepository.findAll());
 
         return "employees";
     }
 
-    @GetMapping("/addemployee")
+    @GetMapping("/user/addemployee")
     public String getEmployeeForm(Model model) {
         LOGGER.info("Getting adding employee form");
         model.addAttribute("employee", new Employee());
@@ -41,7 +48,7 @@ public class EmployeeController {
         return "addemployee";
     }
 
-    @PostMapping("/addemployee")
+    @PostMapping("/user/addemployee")
     public String addEmployee(@ModelAttribute Employee employee) {
         LOGGER.info("Saving employee {}", employee);
         contactDetailsRepository.save(employee.getContactDetails());
@@ -51,7 +58,7 @@ public class EmployeeController {
         return "result";
     }
 
-    @GetMapping("/delete_employee")
+    @GetMapping("/user/delete_employee")
     public String deleteEmployee(@RequestParam(name="id")String employeeId) {
         LOGGER.info("Deleting employee id= {}", employeeId);
         employeeRepository.deleteById(Long.valueOf(employeeId));
@@ -60,7 +67,7 @@ public class EmployeeController {
         return "result";
     }
 
-    @GetMapping("/edit_employee")
+    @GetMapping("/user/edit_employee")
     public String editEmployee(@RequestParam(name="id")String employeeId, Model model) {
         LOGGER.info("Getting adding employee form");
         Optional<Employee> employee = employeeRepository.findById(Long.valueOf(employeeId));

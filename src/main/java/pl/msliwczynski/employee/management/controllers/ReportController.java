@@ -22,7 +22,7 @@ public class ReportController {
         this.reportService = reportService;
     }
 
-    @GetMapping("/report")
+    @GetMapping("/user/report")
     public String getAnnualReport(Model model) {
         LOGGER.info("Generating report");
         String currentYear = String.valueOf(LocalDate.now().getYear());
@@ -33,7 +33,7 @@ public class ReportController {
         return "report";
     }
 
-    @PostMapping("/setYear")
+    @PostMapping("/user/setYear")
     public String setYear(@ModelAttribute ReportYear reportYear, Model model) {
         LOGGER.info("ReportYear: {}", reportYear);
         model.addAttribute("report", reportService.getReportByYear(reportYear.getNewYear()));
