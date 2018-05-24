@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{styles.css}">
+    <script src="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{buttons.dataTables.min.css}">
+    <script type="text/javascript" th:src="@{datatables.min.js}"></script>
+    <script type="text/javascript" th:src="@{buttons.print.min.js}"></script>
+    <script type="text/javascript" th:src="@{dataTables.buttons.min.js}"></script>
+</head>
+<body>
+
+<table id="reportTable" class="cell-border">
+    <thead>
+    <tr>
+        <th>Month</th>
+        <th>Salary expense</th>
+        <th>Average salary</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="month, iter : ${report.keySet}">
+        <td th:text="${iter.index}"></td>
+        <td th:text="${report.getKey(month).get(0)}"></td>
+        <td th:text="${report.getKey(month).get(1)}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
