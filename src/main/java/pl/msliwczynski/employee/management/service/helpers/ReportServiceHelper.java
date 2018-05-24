@@ -27,7 +27,7 @@ public class ReportServiceHelper {
     }
 
     private boolean shouldIncludeInMonthSalary(Employee employee, LocalDate monthEndDate) {
-        if (employee.getWorkStartDate().isAfter(monthEndDate) || !employee.getWorkEndDate().isAfter(monthEndDate)) {
+        if (employee.getWorkStartDate().isAfter(monthEndDate) || (employee.getWorkEndDate() != null && !employee.getWorkEndDate().isAfter(monthEndDate))) {
             return false;
         }
         return true;
