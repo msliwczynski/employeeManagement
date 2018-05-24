@@ -12,7 +12,14 @@
     <script type="text/javascript" th:src="@{dataTables.buttons.min.js}"></script>
 </head>
 <body>
+<div lang="en" th:replace="fragments/nav :: nav"></div>
+<h3 th:text="'Salary report for ' + ${reportYear.year}"></h3>
 
+<form action="#" th:action="@{/setYear}" th:object="${reportYear}" method="post">
+    <label>Type year for report</label>
+    <input type="text" placeholder="YYYY" required th:field="*{newYear}"/>
+    <input type="submit" value="Submit"/>
+</form>
 <table id="reportTable" class="cell-border">
     <thead>
     <tr>
@@ -22,13 +29,23 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="month, iter : ${report.keySet}">
-        <td th:text="${iter.index}"></td>
-        <td th:text="${report.getKey(month).get(0)}"></td>
-        <td th:text="${report.getKey(month).get(1)}"></td>
+    <tr th:each="month : ${report}">
+        <td th:text="${month.key}"></td>
+        <td th:text="${month.value.get(0)}"></td>
+        <td th:text="${month.value.get(1)}"></td>
     </tr>
     </tbody>
 </table>
 
+<script>
+    $(document).ready(function() {
+        $('#reportTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'print'
+            ]
+        });
+    } );
+</script>
 </body>
 </html>
