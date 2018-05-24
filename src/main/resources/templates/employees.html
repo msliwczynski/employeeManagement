@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Employee management app</title>
-    <link rel="stylesheet" type="text/css" th:href="@{styles.css}">
+    <!--<link rel="stylesheet" type="text/css" th:href="@{../resources/static/styles.css}">-->
+    <link rel="stylesheet" href="/css/styles.css">
     <script src="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" th:href="@{buttons.dataTables.min.css}">
-    <script type="text/javascript" th:src="@{datatables.min.js}"></script>
-    <script type="text/javascript" th:src="@{buttons.print.min.js}"></script>
-    <script type="text/javascript" th:src="@{dataTables.buttons.min.js}"></script>
+    <link rel="stylesheet" type="text/css" href="/css/buttons.dataTables.min.css">
+    <script type="text/javascript" src="/js/datatables.min.js"></script>
+    <script type="text/javascript" src="/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
 </head>
 
 <body>
@@ -46,6 +47,8 @@
             </tr>
         </tbody>
     </table>
+
+    <div th:replace="fragments/footer :: footer"/>
 
     <script>
         $(document).ready(function() {
