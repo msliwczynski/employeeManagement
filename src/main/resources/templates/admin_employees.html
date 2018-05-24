@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/table_header :: table_header"></head>
+
+<body>
+<div lang="en" th:replace="fragments/nav :: nav"></div>
+<h1>Employees</h1>
+<table id="employeeTable" class="cell-border">
+    <thead>
+    <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Phone</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employee : ${employees}">
+        <td th:text="${employee.firstName}"></td>
+        <td th:text="${employee.lastName}"></td>
+        <td th:text="${employee.contactDetails.phone}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div th:replace="fragments/footer :: footer"/>
+
+<script>
+    $(document).ready(function() {
+        $('#employeeTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'print'
+            ]
+        });
+    } );
+</script>
+</body>
+</html>

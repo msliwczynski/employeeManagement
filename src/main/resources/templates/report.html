@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/table_header :: table_header"></head>
+<body>
+<div lang="en" th:replace="fragments/nav :: nav"></div>
+<h3 th:text="'Salary report for ' + ${reportYear.year}"></h3>
+
+<form action="#" th:action="@{/user/setYear}" th:object="${reportYear}" method="post">
+    <label>Type year for report</label>
+    <input type="text" placeholder="YYYY" required th:field="*{newYear}"/>
+    <input type="submit" value="Submit"/>
+</form>
+<table id="reportTable" class="cell-border">
+    <thead>
+    <tr>
+        <th>Month</th>
+        <th>Salary expense</th>
+        <th>Average salary</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="month : ${report}">
+        <td th:text="${month.key}"></td>
+        <td th:text="${month.value.get(0)}"></td>
+        <td th:text="${month.value.get(1)}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div th:replace="fragments/footer :: footer"/>
+
+<script>
+    $(document).ready(function() {
+        $('#reportTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'print'
+            ]
+        });
+    } );
+</script>
+</body>
+</html>

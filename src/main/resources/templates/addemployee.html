@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add/edit employee</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div lang="en" th:replace="fragments/nav :: nav"></div>
+<h1>Form</h1>
+<form action="#" th:action="@{/user/addemployee}" th:object="${employee}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <p>Firstname: <input type="text" required th:field="*{firstName}"/></p>
+    <p>Lastname: <input type="text" required th:field="*{lastName}"/></p>
+    <p>Start day of work: <input type="text" required pattern="[0-9]{2}.[0-1][0-9].[0-9]{2}" placeholder="dd.MM.yy" th:field="*{workStartDate}"/></p>
+    <p>Finish day of work: <input type="text" pattern="[0-9]{2}.[0-1][0-9].[0-9]{2}" placeholder="dd.MM.yy" th:field="*{workEndDate}"/> </p>
+    <p>Salary: <input type="number" required th:field="*{salary}"/></p>
+    <p>Street: <input type="text" required th:field="*{contactDetails.street}"/></p>
+    <p>City: <input type="text" required th:field="*{contactDetails.city}"/></p>
+    <p>Phone: <input type="text" required placeholder="XXX XXX XXX" th:field="*{contactDetails.phone}"/></p>
+
+    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+</form>
+    <h4 th:text="${error}" style="color: red;"></h4>
+
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

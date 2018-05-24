@@ -1,0 +1,15 @@
+<div th:fragment="nav" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" style="display: flex">
+    <div class="topnav" sec:authorize="hasRole('USER')">
+        <a class="active" href="/">Home</a>
+        <a href="/user/employees">Employees</a>
+        <a href="/user/addemployee">Add employee</a>
+        <a href="/user/report">Report</a>
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+
+    <div class="topnav" sec:authorize="hasRole('ADMIN')">
+        <a class="active" href="/">Home</a>
+        <a href="/admin/employees">Employees</a>
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+</div>
