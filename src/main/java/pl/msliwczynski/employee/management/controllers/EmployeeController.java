@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.msliwczynski.employee.management.model.Employee;
-import pl.msliwczynski.employee.management.repositories.ContactDetailsRepository;
-import pl.msliwczynski.employee.management.repositories.EmployeeRepository;
 import pl.msliwczynski.employee.management.service.EmployeeService;
 
 import java.util.Optional;
@@ -48,10 +46,16 @@ public class EmployeeController {
     }
 
     @PostMapping("/user/addemployee")
-    public String addEmployee(@ModelAttribute Employee employee) {
+    public String addEmployee(@ModelAttribute Employee employee, Model model) {
         LOGGER.info("Saving employee {}", employee);
-        employeeService.saveEmployee(employee);
-        LOGGER.debug("saving completed");
+        try {
+            employeeService.saveEmployee(employee);
+            LOGGER.debug("saving completed");
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("employee", employee);
+            model.addAttribute("error", "Saving error: one of field value is invalid");
+            return "addemployee";
+        }
 
         return "result";
     }

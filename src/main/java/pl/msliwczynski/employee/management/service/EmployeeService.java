@@ -5,7 +5,7 @@ import pl.msliwczynski.employee.management.model.Employee;
 import java.util.Optional;
 
 public interface EmployeeService {
-    void saveEmployee(Employee employee);
+    void saveEmployee(Employee employee) throws IllegalArgumentException;
     void removeEmployee(String id);
     Iterable<Employee> getAllEmployees();
     Optional<Employee> getEmployeeById(String id);
