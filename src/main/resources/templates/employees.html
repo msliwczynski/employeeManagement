@@ -30,8 +30,8 @@
                 <td th:text="${employee.contactDetails.phone}"></td>
                 <td th:text="${employee.contactDetails.street}"></td>
                 <td th:text="${employee.contactDetails.city}"></td>
-                <td><a th:href="@{/edit_employee(id=${employee.id})}" class="btn btn-danger">Edit</a></td>
-                <td><a th:href="@{/delete_employee(id=${employee.id})}" class="btn btn-danger">Delete</a></td>
+                <td><a th:href="@{/user/edit_employee(id=${employee.id})}" class="btn btn-danger">Edit</a></td>
+                <td><a th:href="@{/user/delete_employee(id=${employee.id})}" class="btn btn-danger">Delete</a></td>
 
             </tr>
         </tbody>
